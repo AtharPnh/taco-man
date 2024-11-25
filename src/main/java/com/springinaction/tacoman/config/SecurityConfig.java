@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -65,14 +68,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeRequests()
-                .requestMatchers("/design", "/orders").access("hasRole('USER')")
-                .requestMatchers("/", "/**").access("permitAll()")
-                .and() // The and() method signifies that you’re finished with the authorization configuration and are
-                // ready to apply some additional HTTP configuration.
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/design", "/orders").hasRole("USER")
+                        .requestMatchers("/", "/**").permitAll()
+                )
                 .formLogin(form -> form
                         .loginPage("/login") // Specify custom login page
-                        .loginProcessingUrl("/authenticate")
                         .usernameParameter("user")
                         .passwordParameter("pwd")
                         .defaultSuccessUrl("/design", true)
@@ -84,4 +85,5 @@ public class SecurityConfig {
                 )
                 .build();
     }
+
 }

@@ -16,7 +16,6 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access= AccessLevel.PROTECTED, force=true)
-@RequiredArgsConstructor
 public class Taco {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

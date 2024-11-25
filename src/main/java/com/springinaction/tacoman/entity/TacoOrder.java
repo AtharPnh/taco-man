@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -44,8 +45,11 @@ public class TacoOrder implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Taco> tacos = new ArrayList<>();
     @ManyToMany
-    private User user;
+    private List<User> users = new ArrayList<>();
     public void addTaco(Taco taco) {
         this.tacos.add(taco);
+    }
+    public void addUser(User user) {
+        this.users.add(user);
     }
 }

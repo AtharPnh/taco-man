@@ -61,7 +61,7 @@ public class OrderController {
         //User user = userRepository.findByUsername(principal.getName());
         //User user = (User) authentication.getPrincipal();
 
-        order.setUser(user);
+        order.addUser(user);
 
         log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
@@ -92,7 +92,7 @@ public class OrderController {
             @AuthenticationPrincipal User user, Model model) {
         Pageable pageable = PageRequest.of(0, props.getPageSize());
         model.addAttribute("orders",
-                orderRepo.findByUserOrderByPlacedAtDesc(user, pageable));
+                orderRepo.findByUsersOrderByPlacedAtDesc(user, pageable));
         return "orderList";
     }
 }

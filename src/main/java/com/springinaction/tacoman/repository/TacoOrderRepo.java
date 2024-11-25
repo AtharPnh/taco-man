@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface TacoOrderRepo extends CrudRepository<TacoOrder, Long> {
 
-   List<TacoOrder> findByUserOrderByPlacedAtDesc(User user, Pageable pageable);
+   List<TacoOrder> findByUsersOrderByPlacedAtDesc(User user, Pageable pageable);
 }
